@@ -21,12 +21,12 @@ public class BookStoreService implements IBookService {
     public Book addBook(BookDTO bookdto) {
         Book newBook = new Book(bookdto);
         bookRepo.save(newBook);
-        log.info("Book record inserted successfully");
+        log.info("Book record added successfully");
         return newBook;
     }
     public List<Book> getAllBookRecords(){
         List<Book> 	bookList =bookRepo.findAll();
-        log.info("All book records retrieved successfully");
+        log.info("All book records get successfully");
         return bookList;
     }
     //Ability to serve to controller's retrieving all records api call
@@ -36,7 +36,7 @@ public class BookStoreService implements IBookService {
             throw new BookStoreException("Book Record doesn't exists");
         }
         else {
-            log.info("Book record retrieved successfully for id "+id);
+            log.info("Book record get successfully for id "+id);
             return book;
         }
     }
@@ -60,7 +60,7 @@ public class BookStoreService implements IBookService {
             throw new BookStoreException("Book doesn't exists");
         }
         else {
-            log.info("Book record retrieved successfully for Book Name : "+bookName);
+            log.info("Book record get successfully for Book Name : "+bookName);
             return book;
         }
     }

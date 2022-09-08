@@ -18,8 +18,8 @@ public class UserController {
 
     //localhost:8080/user/add
     @PostMapping("/add")
-    public ResponseEntity<String> saveDataToRepo(@Valid @RequestBody UserDTO userDTO) {
-        ResponseDTO responseDTO = new ResponseDTO("User Record created successfully", userService.saveDataToRepo(userDTO));
+    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) {
+        ResponseDTO responseDTO = new ResponseDTO("User Record created successfully", userService.registerUser(userDTO));
         return new ResponseEntity(responseDTO, HttpStatus.CREATED);
     }
     //localhost:8080/user/getAll

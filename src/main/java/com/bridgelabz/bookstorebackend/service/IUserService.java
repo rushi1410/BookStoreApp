@@ -4,7 +4,7 @@ import com.bridgelabz.bookstorebackend.entity.User;
 
 import java.util.List;
 public interface IUserService {
-    public User saveDataToRepo(UserDTO userDTO);
+  public User registerUser(UserDTO userDTO);
     public List<User> getAllRecords();
 
     public User getRecord(Integer id);

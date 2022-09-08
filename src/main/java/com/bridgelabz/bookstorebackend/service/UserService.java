@@ -3,6 +3,7 @@ import com.bridgelabz.bookstorebackend.dto.UserDTO;
 import com.bridgelabz.bookstorebackend.entity.User;
 import com.bridgelabz.bookstorebackend.exception.BookStoreException;
 import com.bridgelabz.bookstorebackend.repository.UserRepository;
+import com.bridgelabz.bookstorebackend.email.EmailSenderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,17 +17,20 @@ import java.util.Optional;
 public class UserService implements IUserService{
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    EmailSenderService mailService;
 
     //Created service method which serves controller api to post data
-    public User saveDataToRepo(UserDTO userDTO) {
+    public User registerUser(UserDTO userDTO) {
         User newUser = new User(userDTO);
-        userRepo.save(newUser);
-        return newUser;
+        mailService.sendEmail(userDTO.getEmail(),"User got registered","Hi You Have Successfully Added New User ");
+        return userRepo.save(newUser);
     }
+
 
     public List<User> getAllRecords(){
         List<User> 	userList = userRepo.findAll();
-        log.info("All Record Retrieved Successfully");
+        log.info("All Record get Successfully");
         return userList;
     }
     //Ability to serve controller's retrieve user record by id api call
@@ -36,7 +40,7 @@ public class UserService implements IUserService{
             throw new BookStoreException("User Record doesn't exists");
         }
         else {
-            log.info("Record retrieved successfully for id "+id);
+            log.info("Record get successfully for id "+id);
             return user.get();
         }
     }

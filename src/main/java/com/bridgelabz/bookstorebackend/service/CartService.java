@@ -33,7 +33,7 @@ public class CartService implements ICartService {
             if (cartdto.getQuantity() < book.get().getQuantity()) {
                 Cart newCart = new Cart(cartdto.getQuantity(), book.get(), user.get());
                 cartRepo.save(newCart);
-                log.info("Cart record inserted successfully");
+                log.info("Cart record added successfully");
                 book.get().setQuantity(book.get().getQuantity() - cartdto.getQuantity());
                 bookRepo.save(book.get());
                 return newCart;
@@ -48,7 +48,7 @@ public class CartService implements ICartService {
     //Ability to serve to controller's retrieve all cart records api call
     public List<Cart> getAllCartRecords() {
         List<Cart> cartList = cartRepo.findAll();
-        log.info("All cart records retrieved successfully");
+        log.info("All cart records get successfully");
         return cartList;
     }
 

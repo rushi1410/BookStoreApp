@@ -23,34 +23,34 @@ public class CartController {
     @PostMapping("/add")
     public ResponseEntity<ResponseDTO> addBook(@Valid @RequestBody CartDTO cartdto){
         ResponseDTO dto = new ResponseDTO("User add successfully",cartService.addCart(cartdto));
-        return new ResponseEntity(dto, HttpStatus.CREATED);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
     //Ability to call api to get all card records
     //localhost:8080/cart/getAllCarts
     @GetMapping("/getAllCarts")
     public ResponseEntity<ResponseDTO> getAllCartRecords(){
         ResponseDTO dto = new ResponseDTO("All records get successfully",cartService.getAllCartRecords());
-        return new ResponseEntity(dto,HttpStatus.OK);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
     }
     //Ability to call api to get cart record by id
     //localhost:8080/cart/getCart/{id}
     @GetMapping("/getCart/{id}")
     public ResponseEntity<ResponseDTO> getBookRecord(@PathVariable Integer id){
         ResponseDTO dto = new ResponseDTO("Record get successfully",cartService.getCartRecord(id));
-        return new ResponseEntity(dto,HttpStatus.OK);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
     }
     //Ability to call api to update cart by id
     //localhost:8080/cart/updateCart/{id}
     @PutMapping("/updateCart/{id}")
     public ResponseEntity<ResponseDTO> updateCartRecord(@PathVariable Integer id,@Valid @RequestBody CartDTO cartdto){
         ResponseDTO dto = new ResponseDTO("Record updated successfully",updateCartRecord(id,cartdto));
-        return new ResponseEntity(dto,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(dto,HttpStatus.ACCEPTED);
     }
     //Ability to call api to delete cart by id
     //localhost:8080/cart/deleteCart/{id}
     @DeleteMapping("/deleteCart/{id}")
     public ResponseEntity<ResponseDTO> deleteCartRecord(@PathVariable Integer id) {
         ResponseDTO dto = new ResponseDTO("Record deleted successfully", cartService.deleteCartRecord(id));
-        return new ResponseEntity(dto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 }
