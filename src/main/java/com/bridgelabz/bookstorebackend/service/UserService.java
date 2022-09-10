@@ -3,7 +3,8 @@ import com.bridgelabz.bookstorebackend.dto.UserDTO;
 import com.bridgelabz.bookstorebackend.entity.User;
 import com.bridgelabz.bookstorebackend.exception.BookStoreException;
 import com.bridgelabz.bookstorebackend.repository.UserRepository;
-import com.bridgelabz.bookstorebackend.email.EmailSenderService;
+import com.bridgelabz.bookstorebackend.util.EmailSenderService;
+import com.bridgelabz.bookstorebackend.util.TokenUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,29 @@ public class UserService implements IUserService{
     private UserRepository userRepo;
     @Autowired
     EmailSenderService mailService;
+    @Autowired
+    TokenUtility utility;
 
-    //Created service method which serves controller api to post data
-    public User registerUser(UserDTO userDTO) {
-        User newUser = new User(userDTO);
-        mailService.sendEmail(userDTO.getEmail(),"User got registered","Hi You Have Successfully Added New User ");
-        return userRepo.save(newUser);
+    //Ability to serve controller's insert user record api call
+    public String registerUser(UserDTO userdto) {
+        User newUser = new User(userdto);
+        userRepo.save(newUser);
+        String token = utility.createToken(newUser.getUserID());
+        mailService.sendEmail(userdto.getEmail(),"Account Sign-up successfully. ","Hello " + newUser.getFirstName() + " Your Account has been created. Your token is " + token + " Keep this token safe to access your account in future. ");
+        return token;
     }
-
+    //Ability to serve controller's retrieve user record by token api call
+    public User getRecordByToken(String token){
+        Integer id = utility.decodeToken(token);
+        Optional<User> 	user = userRepo.findById(id);
+        if(user.isEmpty()) {
+            throw new BookStoreException("User Record doesn't exists");
+        }
+        else {
+            log.info("Record retrieved successfully for given token having id "+id);
+            return user.get();
+        }
+    }
 
     public List<User> getAllRecords(){
         List<User> 	userList = userRepo.findAll();

@@ -1,4 +1,4 @@
-package com.bridgelabz.bookstorebackend.email;
+package com.bridgelabz.bookstorebackend.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

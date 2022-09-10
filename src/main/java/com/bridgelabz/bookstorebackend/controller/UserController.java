@@ -1,4 +1,5 @@
 package com.bridgelabz.bookstorebackend.controller;
+
 import com.bridgelabz.bookstorebackend.dto.ResponseDTO;
 import com.bridgelabz.bookstorebackend.dto.UserDTO;
 import com.bridgelabz.bookstorebackend.service.IUserService;
@@ -34,6 +35,12 @@ public class UserController {
     public ResponseEntity<ResponseDTO> getRecord(@PathVariable Integer id){
         ResponseDTO dto = new ResponseDTO("Record get successfully",userService.getRecord(id));
         return new ResponseEntity(dto,HttpStatus.OK);
+    }
+    //Ability to call api to retrieve user record by token
+    @GetMapping("/getByToken/{token}")
+    public ResponseEntity<ResponseDTO> getRecordByToken(@PathVariable String token){
+        ResponseDTO dto = new ResponseDTO("Record get successfully !",userService.getRecordByToken(token));
+        return new ResponseEntity<>(dto,HttpStatus.OK);
     }
     //localhost:8080/user/update/{id}
     @PutMapping("/update/{id}")
