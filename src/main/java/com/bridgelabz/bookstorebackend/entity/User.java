@@ -18,7 +18,7 @@ public class User {
     private String lastName;
     private String email;
     private String address;
-
+    private String password;
 
 
     public User(UserDTO dto) {
@@ -26,6 +26,7 @@ public class User {
         this.lastName = dto.getLastName();
         this.email = dto.getEmail();
         this.address = dto.getAddress();
+        this.password = dto.getPassword();
 
     }
     public User(Integer userID, UserDTO dto) {
@@ -34,7 +35,7 @@ public class User {
         this.lastName = dto.getLastName();
         this.email = dto.getEmail();
         this.address = dto.getAddress();
-
+        this.password = dto.getPassword();
     }
     public User() {
         super();

@@ -11,13 +11,14 @@ import com.bridgelabz.bookstorebackend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
 public class CartService implements ICartService {
+
+    //Autowired to inject its dependency here
     @Autowired
     private CartRepository cartRepo;
     @Autowired
@@ -25,7 +26,7 @@ public class CartService implements ICartService {
     @Autowired
     private UserRepository userRepo;
 
-    //Ability to serve to controller's insert cart details api call
+    //Ability to serve to controller's add cart details api call
     public Cart addCart(CartDTO cartdto) {
         Optional<Book> book = bookRepo.findById(cartdto.getBookID());
         Optional<User> user = userRepo.findById(cartdto.getUserID());
@@ -45,14 +46,14 @@ public class CartService implements ICartService {
         }
     }
 
-    //Ability to serve to controller's retrieve all cart records api call
+    //Ability to serve to controller's get all cart records api call
     public List<Cart> getAllCartRecords() {
         List<Cart> cartList = cartRepo.findAll();
         log.info("All cart records retrieved successfully");
         return cartList;
     }
 
-    //Ability to serve to controller's retrieve cart record by id api call
+    //Ability to serve to controller's get cart record by id api call
     public Cart getCartRecord(Integer id) {
         Optional<Cart> cart = cartRepo.findById(id);
         if (cart.isEmpty()) {
@@ -100,6 +101,26 @@ public class CartService implements ICartService {
             cartRepo.deleteById(id);
             log.info("Cart record deleted successfully for id " + id);
             return cart.get();
+        }
+    }
+
+    //Ability to serve to controller's update quantity of books in cart api call
+    public Cart updateQuantity(Integer id, Integer quantity) {
+        Optional<Cart> cart = cartRepo.findById(id);
+        Optional<Book> book = bookRepo.findById(cart.get().getBook().getBookID());
+        if (cart.isEmpty()) {
+            throw new BookStoreException("Cart Record doesn't exists");
+        } else {
+            if (quantity < book.get().getQuantity()) {
+                cart.get().setQuantity(quantity);
+                cartRepo.save(cart.get());
+                log.info("Quantity in cart record updated successfully");
+                book.get().setQuantity(book.get().getQuantity() - (quantity - cart.get().getQuantity()));
+                bookRepo.save(book.get());
+                return cart.get();
+            } else {
+                throw new BookStoreException("Requested quantity is not available");
+            }
         }
     }
 }

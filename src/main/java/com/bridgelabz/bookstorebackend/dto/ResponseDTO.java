@@ -1,4 +1,5 @@
 package com.bridgelabz.bookstorebackend.dto;
+
 import lombok.Data;
 
 //Created ResponseDTO class to get output in format of message with data

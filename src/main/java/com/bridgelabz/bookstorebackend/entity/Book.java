@@ -16,6 +16,8 @@ public class Book {
     private Integer bookID;
     private String bookName;
     private String authorName;
+    private String bookDescription;
+    private String bookImg;
     private Integer price;
     private Integer quantity;
 
@@ -23,6 +25,8 @@ public class Book {
         super();
         this.bookName = dto.getBookName();
         this.authorName = dto.getAuthorName();
+        this.bookDescription = dto.getBookDescription();
+        this.bookImg = dto.getBookImg();
         this.price = dto.getPrice();
         this.quantity = dto.getQuantity();
     }
@@ -31,10 +35,13 @@ public class Book {
         this.bookID = bookID;
         this.bookName = dto.getBookName();
         this.authorName = dto.getAuthorName();
+        this.bookDescription = dto.getBookDescription();
+        this.bookImg = dto.getBookImg();
         this.price = dto.getPrice();
         this.quantity = dto.getQuantity();
     }
     public Book() {
+
         super();
     }
 }
