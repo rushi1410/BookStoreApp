@@ -34,7 +34,7 @@ public class CartService implements ICartService {
             if (cartdto.getQuantity() < book.get().getQuantity()) {
                 Cart newCart = new Cart(cartdto.getQuantity(), book.get(), user.get());
                 cartRepo.save(newCart);
-                log.info("Cart record inserted successfully");
+                log.info("Cart record added successfully");
                 book.get().setQuantity(book.get().getQuantity() - cartdto.getQuantity());
                 bookRepo.save(book.get());
                 return newCart;
